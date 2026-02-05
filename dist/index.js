@@ -1174,7 +1174,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                 result = await coolify.listProjects();
                 break;
             case 'get_project':
-                result = await coolify.getProject(args?.uuid);
+                result = await coolify.getProject(args?.uuid?.trim());
                 break;
             case 'create_project':
                 result = await coolify.createProject({
@@ -1183,62 +1183,63 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                 });
                 break;
             case 'update_project':
-                result = await coolify.updateProject(args?.uuid, {
+                result = await coolify.updateProject(args?.uuid?.trim(), {
                     name: args?.name,
                     description: args?.description,
                 });
                 break;
             case 'delete_project':
-                result = await coolify.deleteProject(args?.uuid);
+                result = await coolify.deleteProject(args?.uuid?.trim());
                 break;
             // Servers
             case 'list_servers':
                 result = await coolify.listServers();
                 break;
             case 'get_server':
-                result = await coolify.getServer(args?.uuid);
+                result = await coolify.getServer(args?.uuid?.trim());
                 break;
             case 'get_server_resources':
-                result = await coolify.getServerResources(args?.uuid);
+                result = await coolify.getServerResources(args?.uuid?.trim());
                 break;
             case 'get_server_domains':
-                result = await coolify.getServerDomains(args?.uuid);
+                result = await coolify.getServerDomains(args?.uuid?.trim());
                 break;
             // Applications
             case 'list_applications':
                 result = await coolify.listApplications();
                 break;
             case 'get_application':
-                result = await coolify.getApplication(args?.uuid);
+                result = await coolify.getApplication(args?.uuid?.trim());
                 break;
             case 'update_application': {
-                const { uuid, ...settings } = args;
+                const { uuid: _uuid, ...settings } = args;
+                const uuid = _uuid?.trim();
                 result = await coolify.updateApplication(uuid, settings);
                 break;
             }
             case 'delete_application':
-                result = await coolify.deleteApplication(args?.uuid);
+                result = await coolify.deleteApplication(args?.uuid?.trim());
                 break;
             case 'start_application':
-                result = await coolify.startApplication(args?.uuid);
+                result = await coolify.startApplication(args?.uuid?.trim());
                 break;
             case 'stop_application':
-                result = await coolify.stopApplication(args?.uuid);
+                result = await coolify.stopApplication(args?.uuid?.trim());
                 break;
             case 'restart_application':
-                result = await coolify.restartApplication(args?.uuid);
+                result = await coolify.restartApplication(args?.uuid?.trim());
                 break;
             case 'deploy_application':
-                result = await coolify.deployApplication(args?.uuid, args?.force);
+                result = await coolify.deployApplication(args?.uuid?.trim(), args?.force);
                 break;
             case 'get_application_logs':
-                result = await coolify.getApplicationLogs(args?.uuid, args?.lines);
+                result = await coolify.getApplicationLogs(args?.uuid?.trim(), args?.lines);
                 break;
             case 'list_application_envs':
-                result = await coolify.listApplicationEnvs(args?.uuid);
+                result = await coolify.listApplicationEnvs(args?.uuid?.trim());
                 break;
             case 'create_application_env':
-                result = await coolify.createApplicationEnv(args?.uuid, {
+                result = await coolify.createApplicationEnv(args?.uuid?.trim(), {
                     key: args?.key,
                     value: args?.value,
                     is_build_time: args?.is_build_time,
@@ -1246,7 +1247,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                 });
                 break;
             case 'update_application_env':
-                result = await coolify.updateApplicationEnv(args?.uuid, {
+                result = await coolify.updateApplicationEnv(args?.uuid?.trim(), {
                     key: args?.key,
                     value: args?.value,
                     is_build_time: args?.is_build_time,
@@ -1254,51 +1255,52 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                 });
                 break;
             case 'delete_application_env':
-                result = await coolify.deleteApplicationEnv(args?.uuid, args?.env_uuid);
+                result = await coolify.deleteApplicationEnv(args?.uuid?.trim(), args?.env_uuid?.trim());
                 break;
             // Application Persistent Storage
             case 'list_application_storages':
-                result = await coolify.listApplicationStorages(args?.uuid);
+                result = await coolify.listApplicationStorages(args?.uuid?.trim());
                 break;
             case 'create_application_storage':
-                result = await coolify.createApplicationStorage(args?.uuid, {
+                result = await coolify.createApplicationStorage(args?.uuid?.trim(), {
                     name: args?.name,
                     mount_path: args?.mount_path,
                     host_path: args?.host_path,
                 });
                 break;
             case 'delete_application_storage':
-                result = await coolify.deleteApplicationStorage(args?.uuid, args?.storage_uuid);
+                result = await coolify.deleteApplicationStorage(args?.uuid?.trim(), args?.storage_uuid?.trim());
                 break;
             // Services
             case 'list_services':
                 result = await coolify.listServices();
                 break;
             case 'get_service':
-                result = await coolify.getService(args?.uuid);
+                result = await coolify.getService(args?.uuid?.trim());
                 break;
             case 'update_service': {
-                const { uuid, ...settings } = args;
+                const { uuid: _uuid, ...settings } = args;
+                const uuid = _uuid?.trim();
                 result = await coolify.updateService(uuid, settings);
                 break;
             }
             case 'delete_service':
-                result = await coolify.deleteService(args?.uuid);
+                result = await coolify.deleteService(args?.uuid?.trim());
                 break;
             case 'start_service':
-                result = await coolify.startService(args?.uuid);
+                result = await coolify.startService(args?.uuid?.trim());
                 break;
             case 'stop_service':
-                result = await coolify.stopService(args?.uuid);
+                result = await coolify.stopService(args?.uuid?.trim());
                 break;
             case 'restart_service':
-                result = await coolify.restartService(args?.uuid);
+                result = await coolify.restartService(args?.uuid?.trim());
                 break;
             case 'list_service_envs':
-                result = await coolify.listServiceEnvs(args?.uuid);
+                result = await coolify.listServiceEnvs(args?.uuid?.trim());
                 break;
             case 'update_service_env':
-                result = await coolify.updateServiceEnv(args?.uuid, {
+                result = await coolify.updateServiceEnv(args?.uuid?.trim(), {
                     key: args?.key,
                     value: args?.value,
                 });
@@ -1308,51 +1310,55 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                 result = await coolify.listDatabases();
                 break;
             case 'get_database':
-                result = await coolify.getDatabase(args?.uuid);
+                result = await coolify.getDatabase(args?.uuid?.trim());
                 break;
             case 'update_database': {
-                const { uuid, ...settings } = args;
+                const { uuid: _uuid, ...settings } = args;
+                const uuid = _uuid?.trim();
                 result = await coolify.updateDatabase(uuid, settings);
                 break;
             }
             case 'delete_database':
-                result = await coolify.deleteDatabase(args?.uuid);
+                result = await coolify.deleteDatabase(args?.uuid?.trim());
                 break;
             case 'start_database':
-                result = await coolify.startDatabase(args?.uuid);
+                result = await coolify.startDatabase(args?.uuid?.trim());
                 break;
             case 'stop_database':
-                result = await coolify.stopDatabase(args?.uuid);
+                result = await coolify.stopDatabase(args?.uuid?.trim());
                 break;
             case 'restart_database':
-                result = await coolify.restartDatabase(args?.uuid);
+                result = await coolify.restartDatabase(args?.uuid?.trim());
                 break;
             // Database Backups
             case 'list_database_backups':
-                result = await coolify.listDatabaseBackups(args?.uuid);
+                result = await coolify.listDatabaseBackups(args?.uuid?.trim());
                 break;
             case 'create_database_backup': {
-                const { uuid, ...backupSettings } = args;
+                const { uuid: _uuid, ...backupSettings } = args;
+                const uuid = _uuid?.trim();
                 result = await coolify.createDatabaseBackup(uuid, backupSettings);
                 break;
             }
             case 'update_database_backup': {
-                const { uuid, backup_uuid, ...backupSettings } = args;
+                const { uuid: _uuid, backup_uuid: _backup_uuid, ...backupSettings } = args;
+                const uuid = _uuid?.trim();
+                const backup_uuid = _backup_uuid?.trim();
                 result = await coolify.updateDatabaseBackup(uuid, backup_uuid, backupSettings);
                 break;
             }
             case 'delete_database_backup':
-                result = await coolify.deleteDatabaseBackup(args?.uuid, args?.backup_uuid);
+                result = await coolify.deleteDatabaseBackup(args?.uuid?.trim(), args?.backup_uuid?.trim());
                 break;
             case 'trigger_database_backup':
-                result = await coolify.triggerDatabaseBackup(args?.uuid, args?.backup_uuid);
+                result = await coolify.triggerDatabaseBackup(args?.uuid?.trim(), args?.backup_uuid?.trim());
                 break;
             // Deployments
             case 'list_deployments':
                 result = await coolify.listDeployments();
                 break;
             case 'get_deployment':
-                result = await coolify.getDeployment(args?.uuid);
+                result = await coolify.getDeployment(args?.uuid?.trim());
                 break;
             default:
                 throw new Error(`Unknown tool: ${name}`);
